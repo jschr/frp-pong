@@ -1,4 +1,4 @@
-import { COURT_BUFFER, COURT_LINE_SIZE, BALL_SIZE, SECONDARY_COLOR } from '../constants';
+import { BALL_SIZE, SECONDARY_COLOR } from '../constants';
 
 import * as Layer from './Layer';
 
@@ -11,8 +11,8 @@ export const init = (x, y, velocity) => ({
 export const view = ({ model = init() }, ...children) => (
   Layer.view({
     model: {
-      x: model.x + COURT_BUFFER - COURT_LINE_SIZE,
-      y: model.y + COURT_BUFFER - COURT_LINE_SIZE,
+      x: model.x,
+      y: model.y,
       w: BALL_SIZE,
       h: BALL_SIZE,
       fill: SECONDARY_COLOR,

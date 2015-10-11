@@ -1,11 +1,12 @@
 import * as Section from './Section';
 
+import convertToColor from '../utils/convertToColor';
+
 
 const baseStyle = {
   position: 'absolute'
 };
 
-const color = (value) => `hsla(${value[0]}, ${value[1]}%, ${value[2]}%, ${value[3]})`;
 
 const computeStyles = (model) => {
   const styles = { ... baseStyle };
@@ -15,13 +16,14 @@ const computeStyles = (model) => {
   styles.width = model.w;
   styles.height = model.h;
   styles.borderRadius = model.borderRadius;
+  styles.opacity = model.opacity;
 
   if (model.fill) {
-    styles.backgroundColor = color(model.fill);
+    styles.backgroundColor = convertToColor(model.fill);
   }
 
   if (model.borderColor) {
-    styles.border = `${model.borderWidth}px ${model.borderStyle || 'solid'} ${color(model.borderColor)}`;
+    styles.border = `${model.borderWidth}px ${model.borderStyle || 'solid'} ${convertToColor(model.borderColor)}`;
   }
 
   return styles;

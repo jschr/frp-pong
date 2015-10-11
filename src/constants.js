@@ -11,3 +11,4 @@ export const PADDLE_BUFFER = BALL_SIZE / 2;
 
 export const PRIMARY_COLOR = [ 0, 0, 100, 1 ];
 export const SECONDARY_COLOR = [ 0, 0, 20, 1 ];
+export const SCORE_SIZE = 60;

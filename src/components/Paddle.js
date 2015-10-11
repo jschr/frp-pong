@@ -12,7 +12,7 @@ export const init = (position, x) => ({
 export const view = ({ model = init() }, ...children) => (
   Layer.view({
     model: {
-      x: model.x + COURT_BUFFER + PADDLE_BUFFER,
+      x: model.x,
       y: model.y,
       w: PADDLE_WIDTH,
       h: PADDLE_HEIGHT,
