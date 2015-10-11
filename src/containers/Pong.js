@@ -138,7 +138,6 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       modelState.observe('ball', 'velocity', 1),
       (y, velocity) => ({ y, velocity })
     )
-      // .filter(({ velocity }) => !!velocity)
       .map(({ y, velocity }) => y + velocity)
       .selectMany(modelState.set('ball', 'y')),
 
