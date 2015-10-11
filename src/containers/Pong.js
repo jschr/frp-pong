@@ -18,6 +18,13 @@ const BALL_CENTER = [
 ];
 
 
+const randomness = (val) => (
+  Math.round(Math.random()) ?
+    val + (val * (Math.random() / 10)) :
+    val - (val * (Math.random() / 10))
+);
+
+
 const init = () => ({
   playerOneScore: Score.init(0),
 
@@ -235,6 +242,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       }))
       .filter(({ hit, velocity }) => !!hit && velocity > 0)
       .map(({ velocity }) => -velocity)
+      .map(randomness)
       .selectMany(modelState.set('ball', 'velocity', 1)),
 
     // ball hit top paddle
@@ -257,6 +265,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       }))
       .filter(({ hit, velocity }) => !!hit && velocity < 0)
       .map(({ velocity }) => -velocity)
+      .map(randomness)
       .selectMany(modelState.set('ball', 'velocity', 1)),
 
     // paddle top ai

@@ -1,7 +1,7 @@
 import Rx from 'rx';
 import createContainer from '../core/container';
 
-import { HEIGHT } from '../constants';
+import { HEIGHT, WIDTH } from '../constants';
 
 
 import * as Section from '../components/Section';
@@ -17,12 +17,15 @@ const actions = () => ({});
 
 const containerStyle = {
   position: 'relative',
-  height: HEIGHT
+  height: HEIGHT,
+  width: WIDTH,
+  display: 'inline-block'
 };
 
 
 const view = () => (
   Section.view({},
+    Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong())
