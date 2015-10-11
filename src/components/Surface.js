@@ -2,6 +2,7 @@ import { WIDTH, HEIGHT, PRIMARY_COLOR } from '../constants';
 
 import * as Layer from './Layer';
 
+
 export const view = ({}, ...children) => (
   Layer.view({
     model: {

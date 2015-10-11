@@ -35,6 +35,7 @@ const onKeyboard = Rx.Observable.create((observer) => {
   document.addEventListener('keyup', (e) => observer.onNext({ code: e.which, pressed: false }));
 });
 
+
 const onTick = Rx.Observable.create((observer) => {
   let af;
 
@@ -142,7 +143,6 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       modelState.observe('ball', 'velocity', 0),
       (x, velocity) => ({ x, velocity })
     )
-      // .filter(({ velocity }) => !!velocity)
       .map(({ x, velocity }) => x + velocity)
       .selectMany(modelState.set('ball', 'x')),
 

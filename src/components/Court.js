@@ -2,6 +2,7 @@ import { COURT_BUFFER, COURT_WIDTH, COURT_HEIGHT, COURT_LINE_SIZE, SECONDARY_COL
 
 import * as Layer from './Layer';
 
+
 export const view = ({}, ...children) => (
   Layer.view({
     model: {
