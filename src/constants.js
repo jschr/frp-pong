@@ -1,5 +1,5 @@
-export const WIDTH = 800;
-export const HEIGHT = 600;
+export const WIDTH = 600;
+export const HEIGHT = 400;
 export const COURT_BUFFER = 20;
 export const COURT_LINE_SIZE = 1;
 export const COURT_WIDTH = WIDTH - ((COURT_BUFFER + COURT_LINE_SIZE) * 2);

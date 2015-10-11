@@ -1,7 +1,7 @@
 import Rx from 'rx';
 import createContainer from '../core/container';
 
-import { WIDTH, HEIGHT, COURT_BUFFER, BALL_SIZE, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_BUFFER, SCORE_SIZE, SECONDARY_COLOR } from '../constants';
+import { WIDTH, HEIGHT, COURT_BUFFER, BALL_SIZE, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_BUFFER, SCORE_SIZE } from '../constants';
 
 import * as Surface from '../components/Surface';
 import * as Court from '../components/Court';
@@ -60,23 +60,19 @@ const onTick = Rx.Observable.create((observer) => {
 const actions = () => ({
   playerOneMoveRight: onKeyboard.filter(({ code }) => code === 39)
     .map((x) => x.pressed)
-    .distinctUntilChanged()
-    .startWith(false),
+    .distinctUntilChanged(),
 
   playerOneMoveLeft: onKeyboard.filter(({ code }) => code === 37)
     .map((x) => x.pressed)
-    .distinctUntilChanged()
-    .startWith(false),
+    .distinctUntilChanged(),
 
   playerTwoMoveRight: onKeyboard.filter(({ code }) => code === 68)
     .map((x) => x.pressed)
-    .distinctUntilChanged()
-    .startWith(false),
+    .distinctUntilChanged(),
 
   playerTwoMoveLeft: onKeyboard.filter(({ code }) => code === 65)
     .map((x) => x.pressed)
-    .distinctUntilChanged()
-    .startWith(false),
+    .distinctUntilChanged(),
 
   tick: onTick.timestamp()
 });
@@ -261,7 +257,35 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       }))
       .filter(({ hit, velocity }) => !!hit && velocity < 0)
       .map(({ velocity }) => -velocity)
-      .selectMany(modelState.set('ball', 'velocity', 1))
+      .selectMany(modelState.set('ball', 'velocity', 1)),
+
+    // paddle top ai
+    Rx.Observable.combineLatest(
+      modelState.observe('ball', 'x'),
+      modelState.observe('paddleTop', 'x'),
+      (ballX, paddleX) => ({ ballX, paddleX })
+    )
+      .takeUntil(playerTwoMoveRight.merge(playerTwoMoveLeft))
+      .map(({ ballX, paddleX }) => (
+        (ballX - paddleX) > 0 ?
+          Math.min(paddleX + 2, WIDTH - COURT_BUFFER - PADDLE_BUFFER - PADDLE_WIDTH) :
+          Math.max(paddleX - 2, COURT_BUFFER + PADDLE_BUFFER)
+      ))
+      .selectMany(modelState.set('paddleTop', 'x')),
+
+    // paddle bottom ai
+    Rx.Observable.combineLatest(
+      modelState.observe('ball', 'x'),
+      modelState.observe('paddleBottom', 'x'),
+      (ballX, paddleX) => ({ ballX, paddleX })
+    )
+      .takeUntil(playerOneMoveRight.merge(playerOneMoveLeft))
+      .map(({ ballX, paddleX }) => (
+        (ballX - paddleX) > 0 ?
+          Math.min(paddleX + 2, WIDTH - COURT_BUFFER - PADDLE_BUFFER - PADDLE_WIDTH) :
+          Math.max(paddleX - 2, COURT_BUFFER + PADDLE_BUFFER)
+      ))
+      .selectMany(modelState.set('paddleBottom', 'x'))
   )
 );
 

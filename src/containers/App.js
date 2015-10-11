@@ -23,7 +23,8 @@ const containerStyle = {
 
 const view = () => (
   Section.view({},
-    // Section.view({ style: containerStyle }, Pong()),
+    Section.view({ style: containerStyle }, Pong()),
+    Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong())
   )
 );

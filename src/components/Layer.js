@@ -26,6 +26,8 @@ const computeStyles = (model) => {
     styles.border = `${model.borderWidth}px ${model.borderStyle || 'solid'} ${convertToColor(model.borderColor)}`;
   }
 
+  // styles.transition = 'top 0.25s ease-in, left 0.25s ease-in';
+
   return styles;
 };
 
