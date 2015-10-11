@@ -1,7 +1,7 @@
 import Rx from 'rx';
 import createContainer from '../core/container';
 
-import { WIDTH, HEIGHT, COURT_BUFFER, BALL_SIZE, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_BUFFER, SCORE_SIZE } from '../constants';
+import { WIDTH, HEIGHT, COURT_BUFFER, BALL_SIZE, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_BUFFER, SCORE_SIZE, BALL_START_VELOCITY } from '../constants';
 
 import * as Surface from '../components/Surface';
 import * as Court from '../components/Court';
@@ -18,10 +18,8 @@ const BALL_CENTER = [
 ];
 
 
-const randomness = (val) => (
-  Math.round(Math.random()) ?
-    val + (val * (Math.random() / 10)) :
-    val - (val * (Math.random() / 10))
+const speedUp = (val) => (
+  val + (val * (Math.random() / 50))
 );
 
 
@@ -30,7 +28,7 @@ const init = () => ({
 
   playerTwoScore: Score.init(0),
 
-  ball: Ball.init(BALL_CENTER[0], BALL_CENTER[1], [ 2, 2 ]),
+  ball: Ball.init(BALL_CENTER[0], BALL_CENTER[1], BALL_START_VELOCITY),
 
   paddleTop: Paddle.init('top', (WIDTH / 2) - (PADDLE_WIDTH / 2)),
 
@@ -212,10 +210,10 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       (hit, velocity, score) => ({ hit, velocity, score })
     )
       .filter(({ hit, velocity }) => !!hit && velocity < 0)
-      .map(({ velocity, score }) => ({ velocity: -velocity, score }))
-      .selectMany(({ velocity, score }) =>
+      // .map(({ velocity, score }) => ({ velocity: -velocity, score }))
+      .selectMany(({ score }) =>
         Rx.Observable.combineLatest(
-          modelState.set('ball', 'velocity', 1)(velocity),
+          modelState.set('ball', 'velocity')(BALL_START_VELOCITY),
           modelState.set('ball', 'x')(BALL_CENTER[0]),
           modelState.set('ball', 'y')(BALL_CENTER[1]),
           modelState.set('playerOneScore')(score + 1)
@@ -242,7 +240,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       }))
       .filter(({ hit, velocity }) => !!hit && velocity > 0)
       .map(({ velocity }) => -velocity)
-      .map(randomness)
+      .map(speedUp)
       .selectMany(modelState.set('ball', 'velocity', 1)),
 
     // ball hit top paddle
@@ -265,7 +263,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       }))
       .filter(({ hit, velocity }) => !!hit && velocity < 0)
       .map(({ velocity }) => -velocity)
-      .map(randomness)
+      .map(speedUp)
       .selectMany(modelState.set('ball', 'velocity', 1)),
 
     // paddle top ai

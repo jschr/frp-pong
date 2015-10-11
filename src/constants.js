@@ -5,6 +5,7 @@ export const COURT_LINE_SIZE = 2;
 export const COURT_WIDTH = WIDTH - ((COURT_BUFFER + COURT_LINE_SIZE) * 2);
 export const COURT_HEIGHT = HEIGHT - ((COURT_BUFFER + COURT_LINE_SIZE) * 2);
 export const BALL_SIZE = 16;
+export const BALL_START_VELOCITY = [ 2, 2 ];
 export const PADDLE_HEIGHT = 8;
 export const PADDLE_WIDTH = 100;
 export const PADDLE_BUFFER = BALL_SIZE / 2;
