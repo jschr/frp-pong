@@ -276,7 +276,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
     )
       .takeUntil(playerTwoMoveRight.merge(playerTwoMoveLeft))
       .map(({ ballX, paddleX }) => (
-        (ballX - paddleX) > 0 ?
+        ((ballX + (BALL_SIZE / 2)) - (paddleX + (PADDLE_WIDTH / 2))) > 0 ?
           Math.min(paddleX + 2, WIDTH - COURT_BUFFER - PADDLE_BUFFER - PADDLE_WIDTH) :
           Math.max(paddleX - 2, COURT_BUFFER + PADDLE_BUFFER)
       ))
@@ -290,7 +290,7 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
     )
       .takeUntil(playerOneMoveRight.merge(playerOneMoveLeft))
       .map(({ ballX, paddleX }) => (
-        (ballX - paddleX) > 0 ?
+        ((ballX + (BALL_SIZE / 2)) - (paddleX + (PADDLE_WIDTH / 2))) > 0 ?
           Math.min(paddleX + 2, WIDTH - COURT_BUFFER - PADDLE_BUFFER - PADDLE_WIDTH) :
           Math.max(paddleX - 2, COURT_BUFFER + PADDLE_BUFFER)
       ))

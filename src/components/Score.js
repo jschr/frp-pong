@@ -1,4 +1,4 @@
-import { SECONDARY_COLOR } from '../constants';
+import { SCORE_SIZE, SECONDARY_COLOR } from '../constants';
 
 import * as Text from './Text';
 
@@ -13,10 +13,10 @@ export const init = (score) => (
 const style = {
   fontFamily: 'Helvetica Neue, Arial, sans-serif',
   color: convertToColor(SECONDARY_COLOR),
-  fontSize: 60
+  fontSize: SCORE_SIZE
 };
 
 
 export const view = ({ model = init() }) => (
-  Text.view({ style, model: model })
+  Text.view({ style: { ...style, marginLeft: -(String(model).length - 1) * (SCORE_SIZE / 2) }, model: model })
 );
