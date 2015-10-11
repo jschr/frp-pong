@@ -42,26 +42,6 @@ const onKeyboard = Rx.Observable.create((observer) => {
 });
 
 
-const onTick = Rx.Observable.create((observer) => {
-  let af;
-
-  const tick = () => {
-    af = requestAnimationFrame(() => {
-      if (af !== null) {
-        observer.onNext(tick());
-      }
-    });
-  };
-
-  tick();
-
-  return () => {
-    cancelAnimationFrame(af);
-    af = null;
-  };
-});
-
-
 const actions = () => ({
   playerOneMoveRight: onKeyboard.filter(({ code }) => code === 39)
     .map((x) => x.pressed)
@@ -77,9 +57,7 @@ const actions = () => ({
 
   playerTwoMoveLeft: onKeyboard.filter(({ code }) => code === 65)
     .map((x) => x.pressed)
-    .distinctUntilChanged(),
-
-  tick: onTick.timestamp()
+    .distinctUntilChanged()
 });
 
 
@@ -210,7 +188,6 @@ const update = ({ modelState, playerOneMoveRight, playerOneMoveLeft, playerTwoMo
       (hit, velocity, score) => ({ hit, velocity, score })
     )
       .filter(({ hit, velocity }) => !!hit && velocity < 0)
-      // .map(({ velocity, score }) => ({ velocity: -velocity, score }))
       .selectMany(({ score }) =>
         Rx.Observable.combineLatest(
           modelState.set('ball', 'velocity')(BALL_START_VELOCITY),
