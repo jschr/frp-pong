@@ -1,4 +1,4 @@
-import { BALL_SIZE, SECONDARY_COLOR } from '../constants';
+import { BALL_SIZE, PRIMARY_COLOR } from '../constants';
 
 import * as Layer from './Layer';
 
@@ -17,7 +17,7 @@ export const view = ({ model = init() }, ...children) => (
       y: model.y,
       w: BALL_SIZE,
       h: BALL_SIZE,
-      fill: SECONDARY_COLOR,
+      fill: PRIMARY_COLOR,
       borderRadius: 100
     }
   }, ...children)

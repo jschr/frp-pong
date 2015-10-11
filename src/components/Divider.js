@@ -1,4 +1,4 @@
-import { WIDTH, HEIGHT, COURT_BUFFER, SECONDARY_COLOR } from '../constants';
+import { WIDTH, HEIGHT, COURT_BUFFER, SECONDARY_COLOR, COURT_LINE_SIZE } from '../constants';
 
 import * as Layer from './Layer';
 
@@ -7,11 +7,10 @@ export const view = () => (
   Layer.view({
     model: {
       x: COURT_BUFFER,
-      y: (HEIGHT / 2),
+      y: (HEIGHT / 2) - (COURT_LINE_SIZE / 2),
       w: WIDTH - (COURT_BUFFER * 2),
-      borderWidth: 1,
-      borderColor: SECONDARY_COLOR,
-      opacity: 0.1
+      h: COURT_LINE_SIZE,
+      fill: SECONDARY_COLOR
     }
   })
 );

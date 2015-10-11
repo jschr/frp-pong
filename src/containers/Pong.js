@@ -87,10 +87,10 @@ const actions = () => ({
 
 const view = ({ model = init() }) => (
   Surface.view({},
-    Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) - (HEIGHT / 4), opacity: 0.1 } },
+    Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) - (HEIGHT / 4) } },
       Score.view({ model: model.playerTwoScore })),
 
-    Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) + (HEIGHT / 4), opacity: 0.1 } },
+    Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) + (HEIGHT / 4) } },
       Score.view({ model: model.playerOneScore })),
 
     Divider.view({}),
