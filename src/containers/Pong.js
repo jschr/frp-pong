@@ -9,6 +9,7 @@ import * as Ball from '../components/Ball';
 import * as Paddle from '../components/Paddle';
 import * as Layer from '../components/Layer';
 import * as Score from '../components/Score';
+import * as Divider from '../components/Divider';
 
 
 const BALL_CENTER = [
@@ -85,12 +86,18 @@ const view = ({ model = init() }) => (
   Surface.view({},
     Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) - (HEIGHT / 4), opacity: 0.1 } },
       Score.view({ model: model.playerTwoScore })),
-    Layer.view({ model: { x: COURT_BUFFER, y: (HEIGHT / 2), w: WIDTH - (COURT_BUFFER * 2), borderWidth: 1, borderColor: SECONDARY_COLOR, opacity: 0.1 } }),
+
     Layer.view({ model: { x: (WIDTH / 2), y: (HEIGHT / 2) - (SCORE_SIZE / 2) + (HEIGHT / 4), opacity: 0.1 } },
       Score.view({ model: model.playerOneScore })),
+
+    Divider.view({}),
+
     Court.view({}),
+
     Ball.view({ model: model.ball }),
+
     Paddle.view({ model: model.paddleTop }),
+
     Paddle.view({ model: model.paddleBottom }))
 );
 
