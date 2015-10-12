@@ -3,7 +3,6 @@ import createContainer from '../core/container';
 
 import { HEIGHT, WIDTH } from '../constants';
 
-
 import * as Section from '../components/Section';
 
 import Pong from './Pong';
@@ -28,8 +27,7 @@ const view = () => (
     Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong()),
     Section.view({ style: containerStyle }, Pong()),
-    Section.view({ style: containerStyle }, Pong())
-  )
+    Section.view({ style: containerStyle }, Pong()))
 );
 
 
